@@ -29,7 +29,7 @@ func InvokeGenAI(prompt string) string {
 
 	// Make a standard request
 	resp, err := model.GenerateContent(ctx,
-		genai.Text("help me generate an implementation of the following golang interface (output of go doc). This generated file will be built with the provided interface file together. I have stubbed out the contract types as `any` for now, feel free to populate it with any custom struct needed for the implementation."),
+		genai.Text("help me generate an implementation of the following golang interface (output of go doc). Generate real implementation, not mocked one, unless being prompted so in the documentation. This generated file will be built with the provided interface file together. I have stubbed out the contract types as `any` for now, feel free to populate it with any custom struct needed for the implementation. Include the examples of how to use the custom struct as part of the documentation in the generated go file."),
 		genai.Text(prompt),
 	)
 	if err != nil {

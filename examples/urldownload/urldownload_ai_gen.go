@@ -8,25 +8,25 @@ import (
 	"time"
 )
 
-// DefaultURLDownloader is a standard implementation of the URLDownloader interface
-type DefaultURLDownloader struct {
-	client *http.Client
+// HTTPDownloader is an implementation of the URLDownloader interface.
+type HTTPDownloader struct {
+	Client *http.Client
 }
 
-// NewDefaultURLDownloader creates a new instance with a default http client configuration
-func NewDefaultURLDownloader() *DefaultURLDownloader {
-	return &DefaultURLDownloader{
-		client: &http.Client{
+// NewHTTPDownloader creates a new instance with a default timeout.
+func NewHTTPDownloader() *HTTPDownloader {
+	return &HTTPDownloader{
+		Client: &http.Client{
 			Timeout: 30 * time.Second,
 		},
 	}
 }
 
-// Download implements the URLDownloader interface.
-// It expects the first argument to be a string representing the URL.
-func (d *DefaultURLDownloader) Download(args ...any) ([]byte, error) {
-	if len(args) < 1 {
-		return nil, errors.New("url argument is required")
+// Download performs a GET request to the provided URL.
+// It expects the first argument in the variadic slice to be a string representing the URL.
+func (d *HTTPDownloader) Download(args ...any) ([]byte, error) {
+	if len(args) == 0 {
+		return nil, errors.New("url argument is missing")
 	}
 
 	url, ok := args[0].(string)
@@ -34,7 +34,7 @@ func (d *DefaultURLDownloader) Download(args ...any) ([]byte, error) {
 		return nil, fmt.Errorf("expected first argument to be string, got %T", args[0])
 	}
 
-	resp, err := d.client.Get(url)
+	resp, err := d.Client.Get(url)
 	if err != nil {
 		return nil, fmt.Errorf("http request failed: %w", err)
 	}
@@ -44,13 +44,13 @@ func (d *DefaultURLDownloader) Download(args ...any) ([]byte, error) {
 		return nil, fmt.Errorf("received non-200 status code: %d", resp.StatusCode)
 	}
 
-	data, err := io.ReadAll(resp.Body)
+	content, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, fmt.Errorf("failed to read response body: %w", err)
 	}
 
-	return data, nil
+	return content, nil
 }
 
-// Ensure DefaultURLDownloader implements URLDownloader interface
-var _ URLDownloader = (*DefaultURLDownloader)(nil)
+// Ensure HTTPDownloader implements URLDownloader at compile time.
+var _ URLDownloader = (*HTTPDownloader)(nil)

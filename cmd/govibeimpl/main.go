@@ -29,6 +29,7 @@ func main() {
 	if resp == "" {
 		return
 	}
+	resp = "// AI generated implementation. PROCEED WITH CAUTION.\n" + resp
 
 	file := os.Getenv("GOFILE")
 	ext := path.Ext(file)

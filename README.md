@@ -1,5 +1,7 @@
 # Vibe coding Golang interfaces one at a time
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/yuedongze/govibeimpl.svg)](https://pkg.go.dev/github.com/yuedongze/govibeimpl)
+
 Afraid of using Cursor to manipulate your entire codebase? Want to introduce just a bit of vibes into your existing Go project without giving AI everything you have?
 
 `govibeimpl` is here for you! It's a contract-first code generation tool that only vibes components, modules, and implementations to interfaces that you ask for, and allows its result to be immediately plugged into an existing project.

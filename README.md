@@ -8,7 +8,7 @@ Afraid of using Cursor to manipulate your entire codebase? Want to introduce jus
 
 Using this tool is very simple.
 
-1. Install this tool via `go install github.com/yuedongze/govibeimpl@latest`
+1. Install this tool via `go install github.com/yuedongze/govibeimpl/cmd/govibeimpl@latest`
 2. Define the interface (e.g. `URLDownloader`) that you want `govibeimpl` to generate implementations for.
 3. On top of the interfaces, add the following go generate directive (e.g. `//go:generate govibeimpl -name URLDownloader`)
 4. Vibe generate all the code via `go generate ./...`, how simple is that!
